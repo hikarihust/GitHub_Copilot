@@ -9,7 +9,6 @@ let budgetChart = null;
 // Validate username
 function validateUsername() {
     const usernameInput = document.getElementById('username');
-    const feedback = document.getElementById('username-feedback');
     const username = usernameInput.value;
     
     // Check requirements
@@ -20,7 +19,6 @@ function validateUsername() {
     
     if (!username) {
         usernameInput.classList.remove('is-invalid', 'is-valid');
-        feedback.textContent = '';
         return false;
     }
     
@@ -34,13 +32,11 @@ function validateUsername() {
         if (!hasNumber) errors.push('1 number');
         if (!hasSpecial) errors.push('1 special character');
         
-        feedback.textContent = 'Username must contain: ' + errors.join(', ');
         return false;
     }
     
     usernameInput.classList.remove('is-invalid');
     usernameInput.classList.add('is-valid');
-    feedback.textContent = '';
     return true;
 }
 
@@ -203,15 +199,18 @@ function updateChart() {
 window.onload = function() {
     // Add username validation
     const usernameInput = document.getElementById('username');
-    const submitButton = document.getElementById('submitUsername');
+    const usernameForm = document.getElementById('usernameForm');
     
     usernameInput.addEventListener('input', validateUsername);
     
-    submitButton.addEventListener('click', function() {
+    // Handle form submission
+    usernameForm.addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent page reload
+        
         if (validateUsername()) {
-            alert('Username "' + usernameInput.value + '" is valid!');
+            alert('✓ Success! Username "' + usernameInput.value + '" is valid and has been accepted.');
         } else {
-            alert('Please enter a valid username.');
+            alert('✗ Invalid Username! Please ensure your username meets all requirements:\n- At least 5 characters long\n- Contains at least 1 uppercase letter\n- Contains at least 1 number\n- Contains at least 1 special character');
         }
     });
     
