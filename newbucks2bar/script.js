@@ -54,6 +54,27 @@ function collectData() {
     return { incomeData, expenseData };
 }
 
+// Download chart as PNG
+function downloadChartAsPNG() {
+    if (!budgetChart) {
+        alert('No chart available to download. Please ensure the chart is displayed.');
+        return;
+    }
+
+    // Get the canvas element
+    const canvas = document.getElementById('budgetChart');
+    
+    // Create a link element
+    const link = document.createElement('a');
+    link.download = 'budget-chart.png';
+    
+    // Convert canvas to data URL (PNG format)
+    link.href = canvas.toDataURL('image/png');
+    
+    // Trigger the download
+    link.click();
+}
+
 // Update or create the chart
 function updateChart() {
     // Validate inputs first
@@ -64,14 +85,16 @@ function updateChart() {
     const { incomeData, expenseData } = collectData();
     const canvas = document.getElementById('budgetChart');
     const placeholder = document.getElementById('chart-placeholder');
+    const downloadButton = document.getElementById('downloadChart');
 
     // Check if there's any data
     const hasData = incomeData.some(val => val > 0) || expenseData.some(val => val > 0);
 
     if (!hasData) {
-        // Show placeholder, hide chart
+        // Show placeholder, hide chart and download button
         placeholder.style.display = 'block';
         canvas.style.display = 'none';
+        downloadButton.style.display = 'none';
         if (budgetChart) {
             budgetChart.destroy();
             budgetChart = null;
@@ -79,9 +102,10 @@ function updateChart() {
         return;
     }
 
-    // Hide placeholder, show chart
+    // Hide placeholder, show chart and download button
     placeholder.style.display = 'none';
     canvas.style.display = 'block';
+    downloadButton.style.display = 'block';
 
     // Destroy existing chart if it exists
     if (budgetChart) {
@@ -150,4 +174,10 @@ window.onload = function() {
     chartTab.addEventListener('shown.bs.tab', function() {
         updateChart();
     });
+
+    // Add download button listener
+    const downloadButton = document.getElementById('downloadChart');
+    if (downloadButton) {
+        downloadButton.addEventListener('click', downloadChartAsPNG);
+    }
 };
