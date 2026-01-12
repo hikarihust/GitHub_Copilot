@@ -6,6 +6,44 @@ const monthIds = ['jan', 'feb', 'mar', 'apr', 'may', 'jun',
 
 let budgetChart = null;
 
+// Validate username
+function validateUsername() {
+    const usernameInput = document.getElementById('username');
+    const feedback = document.getElementById('username-feedback');
+    const username = usernameInput.value;
+    
+    // Check requirements
+    const hasUppercase = /[A-Z]/.test(username);
+    const hasNumber = /[0-9]/.test(username);
+    const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(username);
+    const isLongEnough = username.length >= 5;
+    
+    if (!username) {
+        usernameInput.classList.remove('is-invalid', 'is-valid');
+        feedback.textContent = '';
+        return false;
+    }
+    
+    if (!hasUppercase || !hasNumber || !hasSpecial || !isLongEnough) {
+        usernameInput.classList.add('is-invalid');
+        usernameInput.classList.remove('is-valid');
+        
+        let errors = [];
+        if (!isLongEnough) errors.push('at least 5 characters');
+        if (!hasUppercase) errors.push('1 uppercase letter');
+        if (!hasNumber) errors.push('1 number');
+        if (!hasSpecial) errors.push('1 special character');
+        
+        feedback.textContent = 'Username must contain: ' + errors.join(', ');
+        return false;
+    }
+    
+    usernameInput.classList.remove('is-invalid');
+    usernameInput.classList.add('is-valid');
+    feedback.textContent = '';
+    return true;
+}
+
 // Validate inputs for negative numbers
 function validateInputs() {
     const validationMessage = document.getElementById('validation-message');
@@ -163,6 +201,20 @@ function updateChart() {
 
 // Event listeners
 window.onload = function() {
+    // Add username validation
+    const usernameInput = document.getElementById('username');
+    const submitButton = document.getElementById('submitUsername');
+    
+    usernameInput.addEventListener('input', validateUsername);
+    
+    submitButton.addEventListener('click', function() {
+        if (validateUsername()) {
+            alert('Username "' + usernameInput.value + '" is valid!');
+        } else {
+            alert('Please enter a valid username.');
+        }
+    });
+    
     // Add input validation listeners
     const allInputs = document.querySelectorAll('.income-input, .expense-input');
     allInputs.forEach(input => {
