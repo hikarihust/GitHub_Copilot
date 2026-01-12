@@ -3,28 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introduction and Project Setup with GitHub Copilot</title>
-    </head>
+    <title>Bucks2Bar - Budget Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 <body>
-    <h1>Introduction and Project Setup with GitHub Copilot</h1>
-    <p>Welcome to the documentation for setting up your project with GitHub Copilot. This guide will walk you through the initial steps to get started.</p>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Bucks2Bar - Budget Tracker</h1>
+        
+        <!-- Tab Navigation -->
+        <ul class="nav nav-tabs" id="budgetTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="data-tab" data-bs-toggle="tab" data-bs-target="#data-pane" type="button" role="tab" aria-controls="data-pane" aria-selected="true">Data</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="chart-tab" data-bs-toggle="tab" data-bs-target="#chart-pane" type="button" role="tab" aria-controls="chart-pane" aria-selected="false">Chart</button>
+            </li>
+        </ul>
+        
+        <!-- Tab Content -->
+        <div class="tab-content mt-3" id="budgetTabContent">
+            <!-- Data Tab -->
+            <div class="tab-pane fade show active" id="data-pane" role="tabpanel" aria-labelledby="data-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Monthly Income and Expenses</h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Month</th>
+                                        <th>Income ($)</th>
+                                        <th>Expenses ($)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>January</td>
+                                        <td><input type="number" class="form-control income-input" id="income-jan" min="0" step="0.01" placeholder="0.00" value="850"></td>
+                                        <td><input type="number" class="form-control expense-input" id="expense-jan" min="0" step="0.01" placeholder="0.00" value="650"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>February</td>
+                                        <td><input type="number" class="form-control income-input" id="income-feb" min="0" step="0.01" placeholder="0.00" value="920"></td>
+                                        <td><input type="number" class="form-control expense-input" id="expense-feb" min="0" step="0.01" placeholder="0.00" value="580"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>March</td>
+                                        <td><input type="number" class="form-control income-input" id="income-mar" min="0" step="0.01" placeholder="0.00" value="780"></td>
+                                        <td><input type="number" class="form-control expense-input" id="expense-mar" min="0" step="0.01" placeholder="0.00" value="720"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>April</td>
+                                        <td><input type="number" class="form-control income-input" id="income-apr" min="0" step="0.01" placeholder="0.00" value="950"></td>
+                                        <td><input type="number" class="form-control expense-input" id="expense-apr" min="0" step="0.01" placeholder="0.00" value="680"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>May</td>
+                                        <td><input type="number" class="form-control income-input" id="income-may" min="0" step="0.01" placeholder="0.00" value="820"></td>
+                                        <td><input type="number" class="form-control expense-input" id="expense-may" min="0" step="0.01" placeholder="0.00" value="550"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>June</td>
+                                        <td><input type="number" class="form-control income-input" id="income-jun" min="0" step="0.01" placeholder="0.00" value="890"></td>
+                                        <td><input type="number" class="form-control expense-input" id="expense-jun" min="0" step="0.01" placeholder="0.00" value="760"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>July</td>
+                                        <td><input type="number" class="form-control income-input" id="income-jul" min="0" step="0.01" placeholder="0.00" value="1000"></td>
+                                        <td><input type="number" class="form-control expense-input" id="expense-jul" min="0" step="0.01" placeholder="0.00" value="820"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>August</td>
+                                        <td><input type="number" class="form-control income-input" id="income-aug" min="0" step="0.01" placeholder="0.00" value="870"></td>
+                                        <td><input type="number" class="form-control expense-input" id="expense-aug" min="0" step="0.01" placeholder="0.00" value="640"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>September</td>
+                                        <td><input type="number" class="form-control income-input" id="income-sep" min="0" step="0.01" placeholder="0.00" value="930"></td>
+                                        <td><input type="number" class="form-control expense-input" id="expense-sep" min="0" step="0.01" placeholder="0.00" value="590"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>October</td>
+                                        <td><input type="number" class="form-control income-input" id="income-oct" min="0" step="0.01" placeholder="0.00" value="800"></td>
+                                        <td><input type="number" class="form-control expense-input" id="expense-oct" min="0" step="0.01" placeholder="0.00" value="700"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>November</td>
+                                        <td><input type="number" class="form-control income-input" id="income-nov" min="0" step="0.01" placeholder="0.00" value="910"></td>
+                                        <td><input type="number" class="form-control expense-input" id="expense-nov" min="0" step="0.01" placeholder="0.00" value="620"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>December</td>
+                                        <td><input type="number" class="form-control income-input" id="income-dec" min="0" step="0.01" placeholder="0.00" value="960"></td>
+                                        <td><input type="number" class="form-control expense-input" id="expense-dec" min="0" step="0.01" placeholder="0.00" value="780"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="validation-message" class="alert alert-danger mt-3" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chart Tab -->
+            <div class="tab-pane fade" id="chart-pane" role="tabpanel" aria-labelledby="chart-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="chart-placeholder" class="text-center text-muted p-5">
+                            <h5>Enter data to view chart</h5>
+                            <p>Switch to the Data tab and enter your monthly income and expenses.</p>
+                        </div>
+                        <canvas id="budgetChart" style="display: none;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <h2>What is GitHub Copilot?</h2>
-    <p>GitHub Copilot is an AI-powered code completion tool that helps you write code faster and with fewer errors. It suggests whole lines or blocks of code as you type, based on the context of your project.</p>
-    
-    <h2>Setting Up Your Project</h2>
-    <ol>
-        <li><strong>Create a GitHub Account:</strong> If you don't already have one, sign up for a GitHub account at <a href="https://github.com">github.com</a>.</li>
-        <li><strong>Install Visual Studio Code:</strong> Download and install Visual Studio Code from <a href="https://code.visualstudio.com/">code.visualstudio.com</a>.</li>
-        <li><strong>Install GitHub Copilot Extension:</strong> Open Visual Studio Code, go to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window, and search for "GitHub Copilot". Click "Install" to add it to your editor.</li>
-        <li><strong>Sign In to GitHub:</strong> After installing the extension, you'll need to sign in to your GitHub account within Visual Studio Code to activate GitHub Copilot.</li>
-        <li><strong>Create a New Project:</strong> Open a new folder in Visual Studio Code where you want to set up your project. You can create a new file and start coding with GitHub Copilot suggestions.</li>
-    </ol>
-
-    <h2>Using GitHub Copilot</h2>
-    <p>As you start typing in your code files, GitHub Copilot will provide suggestions. You can accept a suggestion by pressing <code>Tab</code> or ignore it by continuing to type.</p>
-
-    <h2>Conclusion</h2>
-    <p>You are now ready to start using GitHub Copilot in your projects! Explore its features and enjoy a more efficient coding experience.</p>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
