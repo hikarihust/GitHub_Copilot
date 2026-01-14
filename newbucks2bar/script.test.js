@@ -1,141 +1,121 @@
-// Mock DOM elements for testing
-function createMockInput(id, value = '') {
-    return {
-        id,
-        value,
-        classList: {
-            items: [],
-            add(...classes) {
-                this.items.push(...classes);
-            },
-            remove(...classes) {
-                this.items = this.items.filter(c => !classes.includes(c));
-            },
-            contains(className) {
-                return this.items.includes(className);
-            }
-        }
-    };
-}
+// Import the function to test
+const { validateUsername } = require('./script.js');
 
-// Test suite for validateUsername logic
-describe('Username Validation', () => {
-    test('should validate username with all requirements', () => {
-        const username = 'Test1!';
+describe('validateUsername', () => {
+    let usernameInput;
+
+    beforeEach(() => {
+        // Set up DOM elements
+        document.body.innerHTML = `
+            <input type="text" id="username" />
+        `;
+        usernameInput = document.getElementById('username');
+    });
+
+    afterEach(() => {
+        document.body.innerHTML = '';
+    });
+
+    test('should return false for empty username and remove validation classes', () => {
+        usernameInput.value = '';
+        usernameInput.classList.add('is-valid', 'is-invalid');
         
-        const hasUppercase = /[A-Z]/.test(username);
-        const hasNumber = /[0-9]/.test(username);
-        const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(username);
-        const isLongEnough = username.length >= 5;
+        const result = validateUsername();
         
-        expect(hasUppercase).toBe(true);
-        expect(hasNumber).toBe(true);
-        expect(hasSpecial).toBe(true);
-        expect(isLongEnough).toBe(true);
+        expect(result).toBe(false);
+        expect(usernameInput.classList.contains('is-valid')).toBe(false);
+        expect(usernameInput.classList.contains('is-invalid')).toBe(false);
     });
 
-    test('should fail validation without uppercase', () => {
-        const username = 'test1!';
-        const hasUppercase = /[A-Z]/.test(username);
-        expect(hasUppercase).toBe(false);
-    });
-
-    test('should fail validation without number', () => {
-        const username = 'Test!a';
-        const hasNumber = /[0-9]/.test(username);
-        expect(hasNumber).toBe(false);
-    });
-
-    test('should fail validation without special character', () => {
-        const username = 'Test1a';
-        const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(username);
-        expect(hasSpecial).toBe(false);
-    });
-
-    test('should fail validation when too short', () => {
-        const username = 'T1!';
-        const isLongEnough = username.length >= 5;
-        expect(isLongEnough).toBe(false);
-    });
-});
-
-// Test suite for input validation logic
-describe('Input Validation', () => {
-    test('should validate positive numbers', () => {
-        const value = parseFloat('100.50');
-        expect(isNaN(value)).toBe(false);
-        expect(value >= 0).toBe(true);
-    });
-
-    test('should detect negative numbers', () => {
-        const value = parseFloat('-50');
-        expect(value < 0).toBe(true);
-    });
-
-    test('should detect invalid input', () => {
-        const value = parseFloat('abc');
-        expect(isNaN(value)).toBe(true);
-    });
-
-    test('should handle empty string as zero', () => {
-        const value = '' === '' ? 0 : parseFloat('') || 0;
-        expect(value).toBe(0);
-    });
-});
-
-// Test suite for data collection logic
-describe('Data Collection', () => {
-    test('should parse valid income and expense values', () => {
-        const incomeValue = '1000';
-        const expenseValue = '500';
+    test('should return false for username without uppercase letter', () => {
+        usernameInput.value = 'test1@';
         
-        const income = incomeValue === '' ? 0 : parseFloat(incomeValue) || 0;
-        const expense = expenseValue === '' ? 0 : parseFloat(expenseValue) || 0;
+        const result = validateUsername();
         
-        expect(income).toBe(1000);
-        expect(expense).toBe(500);
+        expect(result).toBe(false);
+        expect(usernameInput.classList.contains('is-invalid')).toBe(true);
+        expect(usernameInput.classList.contains('is-valid')).toBe(false);
     });
 
-    test('should treat empty fields as zero', () => {
-        const incomeValue = '';
-        const expenseValue = '';
+    test('should return false for username without number', () => {
+        usernameInput.value = 'Test@#';
         
-        const income = incomeValue === '' ? 0 : parseFloat(incomeValue) || 0;
-        const expense = expenseValue === '' ? 0 : parseFloat(expenseValue) || 0;
+        const result = validateUsername();
         
-        expect(income).toBe(0);
-        expect(expense).toBe(0);
+        expect(result).toBe(false);
+        expect(usernameInput.classList.contains('is-invalid')).toBe(true);
+        expect(usernameInput.classList.contains('is-valid')).toBe(false);
     });
 
-    test('should handle invalid values as zero', () => {
-        const incomeValue = 'invalid';
-        const expenseValue = 'xyz';
+    test('should return false for username without special character', () => {
+        usernameInput.value = 'Test123';
         
-        const income = incomeValue === '' ? 0 : parseFloat(incomeValue) || 0;
-        const expense = expenseValue === '' ? 0 : parseFloat(expenseValue) || 0;
+        const result = validateUsername();
         
-        expect(income).toBe(0);
-        expect(expense).toBe(0);
-    });
-});
-
-// Test suite for regex patterns
-describe('Regex Patterns', () => {
-    test('uppercase regex should match uppercase letters', () => {
-        expect(/[A-Z]/.test('ABC')).toBe(true);
-        expect(/[A-Z]/.test('abc')).toBe(false);
-        expect(/[A-Z]/.test('Test')).toBe(true);
+        expect(result).toBe(false);
+        expect(usernameInput.classList.contains('is-invalid')).toBe(true);
+        expect(usernameInput.classList.contains('is-valid')).toBe(false);
     });
 
-    test('number regex should match digits', () => {
-        expect(/[0-9]/.test('123')).toBe(true);
-        expect(/[0-9]/.test('abc')).toBe(false);
-        expect(/[0-9]/.test('test1')).toBe(true);
+    test('should return false for username shorter than 5 characters', () => {
+        usernameInput.value = 'T1@';
+        
+        const result = validateUsername();
+        
+        expect(result).toBe(false);
+        expect(usernameInput.classList.contains('is-invalid')).toBe(true);
+        expect(usernameInput.classList.contains('is-valid')).toBe(false);
     });
 
-    test('special character regex should match special chars', () => {
-        expect(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test('!')).toBe(true);
-        expect(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test('abc')).toBe(false);
-        expect(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test('test@')).toBe(true);
+    test('should return false for username with multiple validation failures', () => {
+        usernameInput.value = 'test';
+        
+        const result = validateUsername();
+        
+        expect(result).toBe(false);
+        expect(usernameInput.classList.contains('is-invalid')).toBe(true);
+        expect(usernameInput.classList.contains('is-valid')).toBe(false);
+    });
+
+    test('should return true for valid username meeting all requirements', () => {
+        usernameInput.value = 'Test1@';
+        
+        const result = validateUsername();
+        
+        expect(result).toBe(true);
+        expect(usernameInput.classList.contains('is-valid')).toBe(true);
+        expect(usernameInput.classList.contains('is-invalid')).toBe(false);
+    });
+
+    test('should return true for valid username with longer length', () => {
+        usernameInput.value = 'MyUser123!';
+        
+        const result = validateUsername();
+        
+        expect(result).toBe(true);
+        expect(usernameInput.classList.contains('is-valid')).toBe(true);
+        expect(usernameInput.classList.contains('is-invalid')).toBe(false);
+    });
+
+    test('should accept various special characters', () => {
+        const validUsernames = ['Test1!', 'Test1@', 'Test1#', 'Test1$', 'Test1%'];
+        
+        validUsernames.forEach(username => {
+            usernameInput.value = username;
+            const result = validateUsername();
+            expect(result).toBe(true);
+        });
+    });
+
+    test('should remove is-invalid class when username becomes valid', () => {
+        usernameInput.value = 'test';
+        usernameInput.classList.add('is-invalid');
+        
+        usernameInput.value = 'Test1@';
+        const result = validateUsername();
+        
+        expect(result).toBe(true);
+        expect(usernameInput.classList.contains('is-invalid')).toBe(false);
+        expect(usernameInput.classList.contains('is-valid')).toBe(true);
     });
 });

@@ -232,3 +232,8 @@ window.onload = function() {
         downloadButton.addEventListener('click', downloadChartAsPNG);
     }
 };
+
+// Export for testing
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { validateUsername };
+}
