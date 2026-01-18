@@ -1,5 +1,7 @@
 # Agent Instructions - Link Shortener Project
 
+⚠️ **CRITICAL: Before generating ANY code, you MUST read the relevant documentation files in the `/docs` directory first.** ⚠️
+
 This document provides comprehensive guidance for AI coding assistants working on this Next.js-based link shortener application.
 
 ## Project Overview
@@ -15,12 +17,16 @@ This is a modern link shortener application built with:
 
 ## Quick Reference
 
+🔴 **MANDATORY REQUIREMENT**: Before writing ANY code related to the topics below, you MUST first read and understand the corresponding documentation file. This is NOT optional. 🔴
+
 For detailed instructions on specific topics, refer to these documents in the `/docs` directory:
 
 - **Authentication**: [authentication.md](./docs/authentication.md) - Clerk integration, protected routes, and auth patterns
+  - ⚠️ **READ THIS FIRST** before implementing any authentication-related code
 - **Components**: [components.md](./docs/components.md) - shadcn/ui component usage and UI guidelines
+  - ⚠️ **READ THIS FIRST** before creating or modifying any UI components
 
-ALWAYS refer to the .md file BEFORE generating any code.
+**CRITICAL**: Never skip reading the relevant documentation. The documentation contains essential patterns, conventions, and requirements that must be followed. Generating code without reading the docs will result in incorrect implementations.
 
 ## Core Principles
 
@@ -52,10 +58,11 @@ ALWAYS refer to the .md file BEFORE generating any code.
 
 ## Development Workflow
 
-1. **Before Making Changes**
-   - Understand the existing code structure
-   - Check relevant documentation in `/docs`
-   - Review related components and utilities
+1. **Before Making Changes** ⚠️ **CRITICAL STEP**
+   - **FIRST**: Read the relevant documentation files in `/docs` directory
+   - **SECOND**: Understand the existing code structure
+   - **THIRD**: Review related components and utilities
+   - **NEVER** skip the documentation step - it contains essential requirements
 
 2. **While Coding**
    - Follow established patterns in the codebase

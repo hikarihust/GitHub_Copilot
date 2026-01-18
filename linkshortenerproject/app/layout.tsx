@@ -8,6 +8,7 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -32,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" className="dark">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
@@ -41,8 +42,12 @@ export default function RootLayout({
               <h1 className="text-xl font-bold">Link Shortener</h1>
               <div className="flex gap-4 items-center">
                 <SignedOut>
-                  <SignInButton />
-                  <SignUpButton />
+                  <SignInButton mode="modal">
+                    <Button variant="ghost">Sign In</Button>
+                  </SignInButton>
+                  <SignUpButton mode="modal">
+                    <Button>Sign Up</Button>
+                  </SignUpButton>
                 </SignedOut>
                 <SignedIn>
                   <UserButton />
