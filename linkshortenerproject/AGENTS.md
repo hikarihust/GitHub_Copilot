@@ -17,6 +17,9 @@ This is a modern link shortener application built with:
 
 For detailed instructions on specific topics, refer to these documents in the `/docs` directory:
 
+- **Authentication**: [authentication.md](./docs/authentication.md) - Clerk integration, protected routes, and auth patterns
+- **Components**: [components.md](./docs/components.md) - shadcn/ui component usage and UI guidelines
+
 ALWAYS refer to the .md file BEFORE generating any code.
 
 ## Core Principles
@@ -138,10 +141,11 @@ Required variables (see `.env.example`):
 ## Getting Help
 
 When unsure about:
-- **Architecture decisions**: Consult [architecture.md](./docs/architecture.md)
+- **Authentication**: Check [authentication.md](./docs/authentication.md)
+- **Architecture decisions**: Consult [architecture.md](./docs/architecture.md) (if exists)
 - **Code patterns**: Look for similar implementations in the codebase
-- **Database operations**: Check [database.md](./docs/database.md)
-- **React patterns**: Reference [components.md](./docs/components.md)
+- **Database operations**: Check [database.md](./docs/database.md) (if exists)
+- **React patterns**: Reference [components.md](./docs/components.md) (if exists)
 
 ## Agent Behavior Guidelines
 
